@@ -1,29 +1,28 @@
-import "./App.css";
-import { Routes, Route } from "react-router";
-import Home from "./pages/Home";
-import NotFound from "./pages/Notfound";
+import { Route, Routes } from "react-router";
+
+import Login from "@/components/auth/Login";
+import Signup from "@/components/auth/Signup";
+import { GuestRoute, ProtectedRoute } from "@/components/layout/RouteGuards";
+import { AuthProvider } from "@/context/AuthContext";
+import Home from "@/pages/Home";
+import NotFound from "@/pages/Notfound";
 
 function App() {
   return (
-    <>
+    <AuthProvider>
       <Routes>
-        <Route index element={<Home />} />
-        {/*<Route path="about" element={<About />} />*/}
+        <Route element={<GuestRoute />}>
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
+        </Route>
 
-        {/*<Route element={<AuthLayout />}>
-          <Route path="login" element={<Login />} />
-          <Route path="register" element={<Register />} />
-        </Route>*/}
-
-        {/*<Route path="concerts">
-          <Route index element={<ConcertsHome />} />
-          <Route path=":city" element={<City />} />
-          <Route path="trending" element={<Trending />} />
-        </Route>*/}
+        <Route element={<ProtectedRoute />}>
+          <Route path="/" element={<Home />} />
+        </Route>
 
         <Route path="*" element={<NotFound />} />
       </Routes>
-    </>
+    </AuthProvider>
   );
 }
 

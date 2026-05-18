@@ -9,6 +9,7 @@ export interface User {
 
 export interface AuthResponse {
   user: User;
+  token?: string;
 }
 
 export interface LabelSummary {

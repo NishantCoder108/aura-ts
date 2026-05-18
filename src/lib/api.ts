@@ -1,6 +1,7 @@
 import type { AuthResponse, Item, LabelSummary } from "@/lib/types";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL ?? "http://localhost:8080";
+const AUTH_TOKEN_KEY = "urlvibe_auth_token";
 
 export class ApiError extends Error {
   status: number;
@@ -13,10 +14,11 @@ export class ApiError extends Error {
 }
 
 async function request<T>(path: string, init?: RequestInit): Promise<T> {
+  const token = getAuthToken();
   const response = await fetch(`${API_BASE_URL}${path}`, {
-    credentials: "include",
     headers: {
       "Content-Type": "application/json",
+      ...(token ? { Authorization: `Bearer ${token}` } : {}),
       ...(init?.headers ?? {}),
     },
     ...init,
@@ -42,6 +44,30 @@ async function request<T>(path: string, init?: RequestInit): Promise<T> {
   }
 
   return data as T;
+}
+
+export function getAuthToken() {
+  if (typeof window === "undefined") {
+    return null;
+  }
+
+  return window.localStorage.getItem(AUTH_TOKEN_KEY);
+}
+
+export function setAuthToken(token: string) {
+  if (typeof window === "undefined") {
+    return;
+  }
+
+  window.localStorage.setItem(AUTH_TOKEN_KEY, token);
+}
+
+export function clearAuthToken() {
+  if (typeof window === "undefined") {
+    return;
+  }
+
+  window.localStorage.removeItem(AUTH_TOKEN_KEY);
 }
 
 export function getSession() {

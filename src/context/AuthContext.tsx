@@ -27,15 +27,24 @@ interface AuthContextValue {
 const AuthContext = createContext<AuthContextValue | undefined>(undefined);
 
 export function AuthProvider({ children }: PropsWithChildren) {
-  const [status, setStatus] = useState<AuthStatus>("loading");
+  const [status, setStatus] = useState<AuthStatus>(() =>
+    api.getAuthToken() ? "loading" : "guest",
+  );
   const [user, setUser] = useState<User | null>(null);
 
   async function refreshSession() {
     try {
+      if (!api.getAuthToken()) {
+        setUser(null);
+        setStatus("guest");
+        return;
+      }
+
       const response = await api.getSession();
       setUser(response.user);
       setStatus("authenticated");
     } catch {
+      api.clearAuthToken();
       setUser(null);
       setStatus("guest");
     }
@@ -43,6 +52,9 @@ export function AuthProvider({ children }: PropsWithChildren) {
 
   async function login(payload: { identifier: string; password: string }) {
     const response = await api.login(payload);
+    if (response.token) {
+      api.setAuthToken(response.token);
+    }
     setUser(response.user);
     setStatus("authenticated");
   }
@@ -54,18 +66,26 @@ export function AuthProvider({ children }: PropsWithChildren) {
     password: string;
   }) {
     const response = await api.signup(payload);
+    if (response.token) {
+      api.setAuthToken(response.token);
+    }
     setUser(response.user);
     setStatus("authenticated");
   }
 
   async function logout() {
     await api.logout();
+    api.clearAuthToken();
     setUser(null);
     setStatus("guest");
   }
 
   useEffect(() => {
     let isMounted = true;
+
+    if (!api.getAuthToken()) {
+      return;
+    }
 
     void api
       .getSession()
@@ -82,6 +102,7 @@ export function AuthProvider({ children }: PropsWithChildren) {
           return;
         }
 
+        api.clearAuthToken();
         setUser(null);
         setStatus("guest");
       });

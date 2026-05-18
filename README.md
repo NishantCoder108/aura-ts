@@ -1,6 +1,6 @@
-# URLVibe Frontend
+# Aura Frontend
 
-URLVibe Frontend is the React application for the URLVibe project. It provides the user interface for authentication, playlist-based YouTube library management, favorites, and in-browser playback controls.
+Aura Frontend is the React application for the Aura project. It provides the user interface for authentication, playlist-based YouTube library management, favorites, and in-browser playback controls.
 
 The application is built with `React`, `TypeScript`, and `Vite`, and uses `Tailwind CSS` with `shadcn/ui`-style components for the interface layer. It communicates with the Rust backend over HTTP and relies on cookie-based authentication.
 
@@ -69,7 +69,7 @@ The API base URL is configured through:
 
 - `VITE_API_BASE_URL`
 
-See [.env.example](/Users/nishant/Workspace/nishantcoder108/personal-projects/urlvibe/urlvibe-react/.env.example).
+See [.env.example](./.env.example)
 
 ## Local Development
 

@@ -1,10 +1,9 @@
-/* eslint-disable react-refresh/only-export-components */
+
 import {
   createContext,
   useContext,
   useEffect,
   useState,
-  type PropsWithChildren,
 } from "react";
 
 import * as api from "@/lib/api";
@@ -26,7 +25,7 @@ interface AuthContextValue {
 
 const AuthContext = createContext<AuthContextValue | undefined>(undefined);
 
-export function AuthProvider({ children }: PropsWithChildren) {
+export const AuthProvider = ({ children }) => {
   const [status, setStatus] = useState<AuthStatus>(() =>
     api.getAuthToken() ? "loading" : "guest",
   );
@@ -87,7 +86,7 @@ export function AuthProvider({ children }: PropsWithChildren) {
       return;
     }
 
-    void api
+    api
       .getSession()
       .then((response) => {
         if (!isMounted) {
@@ -113,11 +112,11 @@ export function AuthProvider({ children }: PropsWithChildren) {
   }, []);
 
   return (
-    <AuthContext.Provider
+    <AuthContext
       value={{ status, user, login, signup, logout, refreshSession }}
     >
       {children}
-    </AuthContext.Provider>
+    </AuthContext>
   );
 }
 

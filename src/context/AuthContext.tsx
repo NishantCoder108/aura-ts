@@ -4,6 +4,7 @@ import {
   useContext,
   useEffect,
   useState,
+  type PropsWithChildren,
 } from "react";
 
 import * as api from "@/lib/api";
@@ -25,7 +26,7 @@ interface AuthContextValue {
 
 const AuthContext = createContext<AuthContextValue | undefined>(undefined);
 
-export const AuthProvider = ({ children }) => {
+export const AuthProvider = ({ children }: PropsWithChildren) => {
   const [status, setStatus] = useState<AuthStatus>(() =>
     api.getAuthToken() ? "loading" : "guest",
   );

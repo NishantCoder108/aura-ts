@@ -125,7 +125,7 @@ const Signup = () => {
             />
           </label>
 
-          {error ? <p className="text-sm text-red-700">{error}</p> : null}
+
 
           <Button className="h-9 rounded-md text-sm font-semibold bg-blue-600 hover:bg-blue-700 text-white w-full cursor-pointer" type="submit" disabled={isSubmitting}>
             {isSubmitting ? "Creating account..." : "Continue"}

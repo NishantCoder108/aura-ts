@@ -57,10 +57,6 @@ const Login = () => {
           <h2 className="text-xl text-start font-semibold  tracking-tight text-[#4e4e4e]">
             Sign in to ZenPlay
           </h2>
-          {/* <p className="max-w-xl text-sm leading-6 text-stone-600 md:text-base">
-            Use your email or username to get back to your playlists, favorites,
-            and loop queue.
-          </p> */}
         </div>
         {error ? <span className="text-sm font-semibold text-red-500">{error}</span> : null}
 

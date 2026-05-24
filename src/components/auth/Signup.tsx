@@ -1,16 +1,10 @@
 import { useState, type FormEvent } from "react";
 import { Link, useNavigate } from "react-router";
-
+import logo from "@/assets/logo.svg";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/context/AuthContext";
 import { ApiError } from "@/lib/api";
 
-const shellClassName =
-  "min-h-screen bg-[radial-gradient(circle_at_top_left,rgba(251,191,36,0.18),transparent_24%),radial-gradient(circle_at_top_right,rgba(236,72,153,0.12),transparent_18%),linear-gradient(180deg,#fff8f1_0%,#f4f1eb_48%,#efece6_100%)] px-4 py-10";
-const panelClassName =
-  "mx-auto grid w-full max-w-2xl gap-8 rounded-[28px] border border-stone-200/70 bg-white/85 p-6 shadow-[0_24px_70px_rgba(120,113,108,0.16)] backdrop-blur md:p-8";
-const inputClassName =
-  "h-12 w-full rounded-2xl border border-stone-200 bg-white/90 px-4 text-sm text-stone-900 outline-none transition focus:border-amber-400 focus:ring-4 focus:ring-amber-100";
 
 const Signup = () => {
   const navigate = useNavigate();
@@ -44,28 +38,28 @@ const Signup = () => {
   }
 
   return (
-    <div className={shellClassName}>
-      <div className={panelClassName}>
-        <div className="grid gap-3">
-          <span className="text-xs font-semibold uppercase tracking-[0.24em] text-amber-700">
-            Start fresh
-          </span>
-          <h1 className="text-3xl font-semibold tracking-tight text-stone-900 md:text-4xl">
-            Create your URLVibe account.
-          </h1>
-          <p className="max-w-xl text-sm leading-6 text-stone-600 md:text-base">
-            Save YouTube links into custom playlists, mark favorites, and loop
-            the exact view you are in.
-          </p>
+    <div className="flex items-center justify-center min-h-screen font-circular">
+      <div className="max-w-80 p-3">
+        <div className="flex  gap-3 flex-col mb-11">
+          <div className="flex items-center justify-center">
+            <img src={logo} alt="ZenPlay Logo" className="h-16 w-16" />
+          </div>
+          <h2 className="text-xl text-start font-semibold  tracking-tight text-[#4e4e4e]">
+            Create a ZenPlay account
+          </h2>
+
         </div>
+        {error ? <span className="text-sm font-semibold text-red-500">{error}</span> : null}
+
 
         <form className="grid gap-5" onSubmit={handleSubmit}>
-          <label className="grid gap-2 text-sm font-medium text-stone-700">
+          <label className="grid gap-2 text-xs font-medium text-[#919498]">
             <span>First name</span>
             <input
-              className={inputClassName}
+              className="h-9 rounded-md border text-[#4e4e4e] border-stone-300 px-3 py-2 text-sm"
               name="firstName"
               type="text"
+              required
               autoComplete="given-name"
               value={formData.firstName}
               onChange={(event) =>
@@ -77,12 +71,13 @@ const Signup = () => {
             />
           </label>
 
-          <label className="grid gap-2 text-sm font-medium text-stone-700">
+          <label className="grid gap-2 text-xs font-medium text-[#919498]">
             <span>Email</span>
             <input
-              className={inputClassName}
+              className="h-9 rounded-md border text-[#4e4e4e] border-stone-300 px-3 py-2 text-sm"
               name="email"
               type="email"
+              required
               autoComplete="email"
               value={formData.email}
               onChange={(event) =>
@@ -94,12 +89,13 @@ const Signup = () => {
             />
           </label>
 
-          <label className="grid gap-2 text-sm font-medium text-stone-700">
+          <label className="grid gap-2 text-xs font-medium text-[#919498]">
             <span>Username</span>
             <input
-              className={inputClassName}
+              className="h-9 rounded-md border text-[#4e4e4e] border-stone-300 px-3 py-2 text-sm"
               name="username"
               type="text"
+              required
               autoComplete="username"
               value={formData.username}
               onChange={(event) =>
@@ -111,12 +107,13 @@ const Signup = () => {
             />
           </label>
 
-          <label className="grid gap-2 text-sm font-medium text-stone-700">
+          <label className="grid gap-2 text-xs font-medium text-[#919498]">
             <span>Password</span>
             <input
-              className={inputClassName}
+              className="h-9 rounded-md border text-[#4e4e4e] border-stone-300 px-3 py-2 text-sm"
               name="password"
               type="password"
+              required
               autoComplete="new-password"
               value={formData.password}
               onChange={(event) =>
@@ -130,14 +127,16 @@ const Signup = () => {
 
           {error ? <p className="text-sm text-red-700">{error}</p> : null}
 
-          <Button className="h-12 rounded-full text-sm font-semibold" type="submit" disabled={isSubmitting}>
-            {isSubmitting ? "Creating account..." : "Sign up"}
+          <Button className="h-9 rounded-md text-sm font-semibold bg-blue-600 hover:bg-blue-700 text-white w-full cursor-pointer" type="submit" disabled={isSubmitting}>
+            {isSubmitting ? "Creating account..." : "Continue"}
           </Button>
         </form>
-
-        <p className="text-sm text-stone-600">
+        <p className="text-xs sm:text-sm text-[#919498] mt-2 " >
+          By continuing, you are indicating that you accept our <span className="underline">Terms of Service</span> and <span className="underline">Privacy Policy</span>
+        </p>
+        <p className="text-sm text-[#919498] mt-2 ">
           Already have an account?{" "}
-          <Link className="font-semibold text-amber-700 hover:text-amber-800" to="/login">
+          <Link className="font-semibold text-blue-600 hover:text-blue-700 underline pl-1" to="/login">
             Log in
           </Link>
         </p>

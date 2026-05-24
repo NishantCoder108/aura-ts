@@ -46,6 +46,8 @@
     --radius-2xl: calc(var(--radius) * 1.8);
     --radius-3xl: calc(var(--radius) * 2.2);
     --radius-4xl: calc(var(--radius) * 2.6);
+    /* This defines the 'font-circular' utility */
+    --font-circular: "CircularStd", ui-sans-serif, system-ui;
 }
 
 :root {
@@ -118,12 +120,30 @@
 }
 
 @layer base {
+    @font-face {
+        font-family: 'CircularStd';
+        src: url('assets/fonts/circular-std-regular.ttf') format('truetype');
+        font-weight: 400;
+        font-style: normal;
+        font-display: swap;
+    }
+
+    @font-face {
+        font-family: 'CircularStd';
+        src: url('@assets/fonts/circular-std-bold.otf') format('opentype');
+        font-weight: 700;
+        font-style: normal;
+        font-display: swap;
+    }
+
     * {
         @apply border-border outline-ring/50;
     }
+
     body {
         @apply bg-background text-foreground;
     }
+
     html {
         @apply font-sans;
     }

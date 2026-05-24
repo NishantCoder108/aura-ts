@@ -8,7 +8,14 @@
     "css": "src/index.css",
     "baseColor": "neutral",
     "cssVariables": true,
-    "prefix": ""
+    "prefix": "",
+    "theme": {
+      "extend": {
+        "fontFamily": {
+          "circular": ["CircularStd", "sans-serif"]
+        }
+      }
+    }
   },
   "iconLibrary": "lucide",
   "rtl": false,

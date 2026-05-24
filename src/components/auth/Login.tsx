@@ -26,12 +26,12 @@ const Login = () => {
       await login(formData);
       const nextPath =
         typeof location.state === "object" &&
-        location.state !== null &&
-        "from" in location.state &&
-        typeof location.state.from === "object" &&
-        location.state.from !== null &&
-        "pathname" in location.state.from &&
-        typeof location.state.from.pathname === "string"
+          location.state !== null &&
+          "from" in location.state &&
+          typeof location.state.from === "object" &&
+          location.state.from !== null &&
+          "pathname" in location.state.from &&
+          typeof location.state.from.pathname === "string"
           ? location.state.from.pathname
           : "/";
 
@@ -48,14 +48,14 @@ const Login = () => {
   }
 
   return (
-    <div className="flex items-center justify-center min-h-screen">
-      <div className="">
+    <div className="flex items-center justify-center min-h-screen font-circular">
+      <div className="max-w-80 p-3">
         <div className="flex  gap-3 flex-col mb-11">
           <div className="flex items-center justify-center">
-            <img src={logo} alt="ZenPlay Logo" className="h-20 w-20" />
+            <img src={logo} alt="ZenPlay Logo" className="h-16 w-16" />
           </div>
-          <h2 className="text-[22px] text-start font-semibold  tracking-tight text-[#4e4e4e]">
-            Sign in to ZenPlay 
+          <h2 className="text-xl text-start font-semibold  tracking-tight text-[#4e4e4e]">
+            Sign in to ZenPlay
           </h2>
           {/* <p className="max-w-xl text-sm leading-6 text-stone-600 md:text-base">
             Use your email or username to get back to your playlists, favorites,
@@ -71,6 +71,7 @@ const Login = () => {
               className="h-9 rounded-md border text-[#4e4e4e] border-stone-300 px-3 py-2 text-sm"
               name="identifier"
               type="text"
+              required
               autoComplete="username"
               value={formData.identifier}
               onChange={(event) =>
@@ -88,6 +89,7 @@ const Login = () => {
               className="h-9 rounded-md border text-[#4e4e4e] border-stone-300 px-3 py-2 text-sm"
               name="password"
               type="password"
+              required
               autoComplete="current-password"
               value={formData.password}
               onChange={(event) =>
@@ -99,22 +101,17 @@ const Login = () => {
             />
           </label>
 
-        
-       
-
-          <Button className="h-9 rounded-md text-sm font-semibold bg-blue-500 text-white min-w-3xs md:min-w-80  w-full  cursor-pointer"  type="submit" disabled={isSubmitting}>
+          <Button className="h-9 rounded-md text-sm font-semibold bg-blue-600 hover:bg-blue-700 text-white   w-full  cursor-pointer" type="submit" disabled={isSubmitting}>
             {isSubmitting ? "Signing in..." : "Continue"}
           </Button>
         </form>
 
-        
-
-        <p className="text-sm text-[#919498] mt-2 max-w-sm" >
+        <p className="text-xs sm:text-sm text-[#919498] mt-2 " >
           By continuing, you are indicating that you accept our <span className="underline">Terms of Service</span> and <span className="underline">Privacy Policy</span>
         </p>
         <p className="text-sm text-[#919498] mt-2">
           Don't have an account?
-          <Link className="font-semibold text-blue-500 hover:text-blue-600 underline pl-1" to="/signup">
+          <Link className="font-semibold text-blue-600 hover:text-blue-700 underline pl-1" to="/signup">
             Sign up
           </Link>
         </p>

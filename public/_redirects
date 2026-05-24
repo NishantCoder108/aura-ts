@@ -1,1 +1,5 @@
-/* /index.html   200
+# 1. Redirect the old Netlify subdomain to the new custom domain
+https://aura-vibe.netlify.app/* https://zenplay.life/:splat  301!
+
+# 2. Your existing SPA rule (handles internal routing)
+/* /index.html  200

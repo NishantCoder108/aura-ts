@@ -70,7 +70,7 @@ export function AddVideoForm({
             <input className={fieldClass} placeholder="Focus, Chill, Code..." type="text" value={formData.newLabel} onChange={(event) => setFormData((current) => ({ ...current, newLabel: event.target.value }))} />
           </label>
         )}
-        <Button className={primaryButtonClass} disabled={isSaving} type="submit">
+        <Button className={primaryButtonClass} disabled={isSaving || !formData.title} type="submit">
           {isSaving ? "Saving..." : "Save to ZenPlay"}
         </Button>
       </form>

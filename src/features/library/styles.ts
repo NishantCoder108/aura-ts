@@ -15,10 +15,10 @@ export const fieldClass =
 export const labelClass = "grid gap-2 text-xs font-medium text-[#756d65]";
 
 export const primaryButtonClass =
-  "h-10 rounded-xl bg-[#2f2d2b] text-sm font-semibold text-white hover:bg-[#1f1d1b]";
+  "h-10 rounded-xl bg-[#2f2d2b] text-sm font-semibold text-white hover:bg-[#1f1d1b] cursor-pointer";
 
 export const quietButtonClass =
-  "h-10 rounded-xl border-white/70 bg-white/45 text-sm font-semibold text-[#4d4741] hover:bg-white/70";
+  "h-10 rounded-xl border-white/70 bg-white/45 text-sm font-semibold text-[#4d4741] hover:bg-white/70 cursor-pointer";
 
 export const chipClass =
-  "inline-flex h-9 shrink-0 items-center gap-2 rounded-full border px-3 text-sm font-semibold transition";
+  "inline-flex h-9 shrink-0 items-center gap-2 rounded-full border px-3 text-sm font-semibold transition cursor-pointer";

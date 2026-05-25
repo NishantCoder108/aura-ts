@@ -40,7 +40,7 @@ export function ZenHeader({
         <div className="flex items-center gap-3">
           <img src={logo} alt="ZenPlay Logo" className="h-12 w-12 rounded-xl shadow-sm" />
           <div>
-            <p className="text-xs font-medium text-[#756d65]">Welcome back, @{user?.username}</p>
+            <p className="text-xs font-medium text-[#756d65]">Welcome back, {user?.firstName}</p>
             <h1 className="text-3xl font-semibold tracking-tight text-[#312d29]">ZenPlay</h1>
           </div>
         </div>

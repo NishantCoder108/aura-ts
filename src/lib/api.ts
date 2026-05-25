@@ -1,7 +1,8 @@
 import type { AuthResponse, Item, LabelSummary } from "@/lib/types";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL ?? "http://localhost:8080";
-const AUTH_TOKEN_KEY = "urlvibe_auth_token";
+const AUTH_TOKEN_KEY = "zenplay_auth_token";
+const LEGACY_AUTH_TOKEN_KEY = "urlvibe_auth_token";
 
 export class ApiError extends Error {
   status: number;
@@ -51,7 +52,16 @@ export function getAuthToken() {
     return null;
   }
 
-  return window.localStorage.getItem(AUTH_TOKEN_KEY);
+  const token = window.localStorage.getItem(AUTH_TOKEN_KEY);
+  const legacyToken = window.localStorage.getItem(LEGACY_AUTH_TOKEN_KEY);
+
+  if (!token && legacyToken) {
+    window.localStorage.setItem(AUTH_TOKEN_KEY, legacyToken);
+    window.localStorage.removeItem(LEGACY_AUTH_TOKEN_KEY);
+    return legacyToken;
+  }
+
+  return token;
 }
 
 export function setAuthToken(token: string) {
@@ -68,6 +78,7 @@ export function clearAuthToken() {
   }
 
   window.localStorage.removeItem(AUTH_TOKEN_KEY);
+  window.localStorage.removeItem(LEGACY_AUTH_TOKEN_KEY);
 }
 
 export function getSession() {

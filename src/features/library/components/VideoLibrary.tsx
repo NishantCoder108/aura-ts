@@ -57,7 +57,7 @@ export function VideoLibrary({
           <p className="text-xs font-medium text-[#756d65]">Playlist desk</p>
           <h2 className="text-xl font-semibold tracking-tight">{headerTitle}</h2>
         </div>
-        {activeView.type === "label" ? (
+        {/* {activeView.type === "label" ? (
           <div className="grid gap-2 sm:grid-cols-[13rem_auto]">
             <input className={fieldClass} value={renameDraft} onChange={(event) => setRenameDraft(event.target.value)} />
             <Button className={quietButtonClass} type="button" variant="outline" onClick={onRename}>
@@ -65,7 +65,7 @@ export function VideoLibrary({
               Rename
             </Button>
           </div>
-        ) : null}
+        ) : null} */}
       </div>
 
       {actionError ? (

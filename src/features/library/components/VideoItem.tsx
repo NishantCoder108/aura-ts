@@ -66,25 +66,30 @@ export function VideoItem({
       </button>
 
       <div className="flex items-center justify-between gap-2">
-        <span className="text-sm text-[#4d4741]">{item.title}</span>
-        <div className="flex items-center gap-2">
-        <Select
-          value={item.label}
-          onValueChange={(value) => onMove(item.id, value)}
+        <span
+          className="block text-sm text-[#4d4741] truncate max-w-[150px] md:max-w-[300px] lg:max-w-none"
+          title={item.title} 
         >
-          <SelectTrigger className="w-full max-w-28 sm:max-w-32 cursor-pointer">
-            <SelectValue placeholder="Label" />
-          </SelectTrigger>
-          <SelectContent position="item-aligned">
-            <SelectGroup>
-              {labelNames.map((label) => (
-                <SelectItem key={label} value={label}>
-                  {label}
-                </SelectItem>
-              ))}
-            </SelectGroup>
-          </SelectContent>
-        </Select>
+          {item.title}
+        </span>
+        <div className="flex items-center gap-2">
+          <Select
+            value={item.label}
+            onValueChange={(value) => onMove(item.id, value)}
+          >
+            <SelectTrigger className="w-full max-w-28 sm:max-w-32 cursor-pointer">
+              <SelectValue placeholder="Label" />
+            </SelectTrigger>
+            <SelectContent position="item-aligned">
+              <SelectGroup>
+                {labelNames.map((label) => (
+                  <SelectItem key={label} value={label}>
+                    {label}
+                  </SelectItem>
+                ))}
+              </SelectGroup>
+            </SelectContent>
+          </Select>
           <Button
             className={cn(
               primaryButtonClass,

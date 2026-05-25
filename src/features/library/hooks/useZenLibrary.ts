@@ -1,17 +1,13 @@
 import { useEffect, useState, type FormEvent } from "react";
 
 import { useAuth } from "@/context/AuthContext";
+import type { PlaybackCommand, PlaybackState } from "@/components/player/youtubeApi";
 import * as api from "@/lib/api";
 import { ApiError } from "@/lib/api";
 import type { Item, LabelSummary, ViewSelection } from "@/lib/types";
 
 export type LabelMode = "existing" | "new";
-export interface LibraryFormData {
-  youtubeUrl: string;
-  title: string;
-  label: string;
-  newLabel: string;
-}
+export type LibraryFormData = { youtubeUrl: string; title: string; label: string; newLabel: string };
 
 const emptyForm: LibraryFormData = { youtubeUrl: "", title: "", label: "", newLabel: "" };
 const err = (error: unknown, fallback: string) =>
@@ -27,6 +23,8 @@ export function useZenLibrary() {
   const [selectedItemId, setSelectedItemId] = useState<string | null>(null);
   const [currentItemId, setCurrentItemId] = useState<string | null>(null);
   const [autoplayToken, setAutoplayToken] = useState(0);
+  const [playbackCommand, setPlaybackCommand] = useState<PlaybackCommand | null>(null);
+  const [isPlaying, setIsPlaying] = useState(false);
   const [loopOne, setLoopOne] = useState(false);
   const [loopList, setLoopList] = useState(true);
   const [isLoading, setIsLoading] = useState(true);
@@ -40,6 +38,10 @@ export function useZenLibrary() {
   const labelNames = labels.map((entry) => entry.label);
   const selectedItem = items.find((item) => item.id === selectedItemId) ?? null;
   const currentItem = items.find((item) => item.id === currentItemId) ?? selectedItem ?? null;
+  const currentIndex = currentItem ? items.findIndex((item) => item.id === currentItem.id) : -1;
+  const hasManyItems = items.length > 1;
+  const canPrevious = hasManyItems && (loopList || currentIndex > 0);
+  const canNext = hasManyItems && (loopList || (currentIndex >= 0 && currentIndex < items.length - 1));
   const headerTitle =
     activeView.type === "label" ? activeView.label : activeView.type === "favorites" ? "Favorites" : "All videos";
 
@@ -71,6 +73,7 @@ export function useZenLibrary() {
       }
       setSelectedItemId(nextItems.length ? (hasSelected ? selectedItemId : nextItems[0].id) : null);
       setCurrentItemId(hasCurrent ? currentItemId : null);
+      if (!nextItems.length) setIsPlaying(false);
     } catch (error) {
       setActionError(err(error, "Unable to load your library."));
     } finally {
@@ -139,33 +142,57 @@ export function useZenLibrary() {
   function playItem(item: Item) {
     setSelectedItemId(item.id);
     setCurrentItemId(item.id);
+    setIsPlaying(true);
+    setPlaybackCommand((current) => ({ action: "play", id: (current?.id ?? 0) + 1 }));
     setAutoplayToken((current) => current + 1);
+  }
+
+  function movePlayback(direction: -1 | 1) {
+    if (!items.length) return;
+    const baseIndex = currentIndex >= 0 ? currentIndex : 0;
+    const nextIndex = baseIndex + direction;
+    if (items[nextIndex]) return playItem(items[nextIndex]);
+    if (loopList) playItem(direction < 0 ? items[items.length - 1] : items[0]);
+  }
+
+  function togglePlayback() {
+    const target = currentItem ?? selectedItem ?? items[0];
+    if (!target) return;
+    if (!currentItemId) return playItem(target);
+    const action = isPlaying ? "pause" : "play";
+    setIsPlaying(!isPlaying);
+    setPlaybackCommand((current) => ({ action, id: (current?.id ?? 0) + 1 }));
+  }
+
+  function handlePlaybackStateChange(state: PlaybackState) {
+    setIsPlaying(state === "playing");
   }
 
   function videoEnded() {
     if (!currentItem || !items.length) return;
-    if (loopOne) return setAutoplayToken((current) => current + 1);
+    if (loopOne) {
+      setIsPlaying(true);
+      return setAutoplayToken((current) => current + 1);
+    }
     const next = items[items.findIndex((item) => item.id === currentItem.id) + 1];
     if (next) return playItem(next);
     if (loopList) return playItem(items[0]);
+    setIsPlaying(false);
     setCurrentItemId(null);
   }
 
   return {
     user, labels, items, activeView, setActiveView, setSelectedItemId, headerTitle,
-    labelNames, selectedItem, currentItem, autoplayToken, loopOne, setLoopOne,
-    loopList, setLoopList, isLoading, isSaving, actionError, renameDraft,
-    setRenameDraft, labelMode, setLabelMode, titleDrafts, setTitleDrafts,
-    savingTitleId, formData, setFormData, createItem, updateTitle, renameLabel,
-    playItem, videoEnded, logout,
+    labelNames, selectedItem, currentItem, autoplayToken, playbackCommand, isPlaying,
+    canPrevious, canNext, loopOne, setLoopOne, loopList, setLoopList, isLoading,
+    isSaving, actionError, renameDraft, setRenameDraft, labelMode, setLabelMode,
+    titleDrafts, setTitleDrafts, savingTitleId, formData, setFormData, createItem, updateTitle, renameLabel,
+    playItem, videoEnded, togglePlayback, handlePlaybackStateChange, logout,
     toggleFavorite: (item: Item) => saveChange(() => api.updateItem(item.id, { isFavorite: !item.isFavorite }), "Unable to update favorites."),
     moveItem: (itemId: string, label: string) => saveChange(() => api.updateItem(itemId, { label }), "Unable to move this video."),
     deleteItem: (itemId: string) => saveChange(() => api.deleteItem(itemId), "Unable to delete this video."),
-    playSelected: () => selectedItem && playItem(selectedItem),
-    playList: () => items[0] && playItem(items[0]),
-    prepareNewLabel: () => {
-      setLabelMode("new");
-      setFormData((current) => ({ ...current, newLabel: `Playlist ${labels.length + 1}` }));
-    },
+    playPrevious: () => movePlayback(-1),
+    playNext: () => movePlayback(1),
+    prepareNewLabel: () => { setLabelMode("new"); setFormData((current) => ({ ...current, newLabel: `Playlist ${labels.length + 1}` })); },
   };
 }

@@ -39,12 +39,18 @@ const Home = () => {
           />
           <PlayerPanel
             autoplayToken={zen.autoplayToken}
+            canNext={zen.canNext}
+            canPrevious={zen.canPrevious}
             currentItem={zen.currentItem}
+            isPlaying={zen.isPlaying}
             loopList={zen.loopList}
             loopOne={zen.loopOne}
             onEnded={zen.videoEnded}
-            onPlayList={zen.playList}
-            onPlaySelected={zen.playSelected}
+            onNext={zen.playNext}
+            onPlaybackStateChange={zen.handlePlaybackStateChange}
+            onPrevious={zen.playPrevious}
+            onTogglePlayback={zen.togglePlayback}
+            playbackCommand={zen.playbackCommand}
             setLoopList={zen.setLoopList}
             setLoopOne={zen.setLoopOne}
           />

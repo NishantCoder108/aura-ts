@@ -147,4 +147,8 @@
     html {
         @apply font-sans;
     }
+
+    @theme {
+        --breakpoint-xs: 25rem;
+    }
 }

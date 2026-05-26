@@ -1,5 +1,5 @@
 export const pageClass =
-  "relative min-h-screen overflow-hidden bg-[#e8e1d8] px-4 py-5 font-circular text-[#3f3b37] sm:px-6 lg:px-8";
+  "relative min-h-screen overflow-hidden bg-[#e8e1d8] px-1 py-3 xs:px-4 xs:py-5 font-circular text-[#3f3b37] sm:px-6 lg:px-8";
 
 export const ambientLayerClass =
   "pointer-events-none fixed inset-0 bg-[linear-gradient(120deg,rgba(255,255,255,0.72),rgba(232,225,216,0.42)_42%,rgba(138,120,101,0.28))]";

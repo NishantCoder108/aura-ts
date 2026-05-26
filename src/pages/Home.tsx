@@ -12,11 +12,11 @@ const Home = () => {
   return (
     <main className={pageClass}>
       <div className={ambientLayerClass} />
-      <img
+      {/* <img
         src={heroArt}
         alt=""
         className="pointer-events-none fixed right-[-3rem] top-20 hidden w-80 opacity-20 blur-[1px] lg:block"
-      />
+      /> */}
       <div className={shellClass}>
         <ZenHeader
           activeView={zen.activeView}

@@ -51,8 +51,8 @@ export function VideoLibrary({
   titleDrafts,
 }: VideoLibraryProps) {
   return (
-    <section className={cn(panelClass, "grid gap-4")}>
-      <div className="grid gap-3 sm:grid-cols-[minmax(0,1fr)_auto] sm:items-end">
+    <section className={cn(panelClass, "flex flex-col gap-4")}>
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-end">
         <div>
           <p className="text-xs font-medium text-[#756d65]">Playlist desk</p>
           <h2 className="text-xl font-semibold tracking-tight">{headerTitle}</h2>
@@ -83,7 +83,7 @@ export function VideoLibrary({
           No videos in this view yet. Save a YouTube URL to get started.
         </div>
       ) : (
-        <div className="grid gap-3">
+        <div className="flex flex-col gap-3">
           {items.map((item) => (
             <VideoItem
               isSelected={selectedItem?.id === item.id}

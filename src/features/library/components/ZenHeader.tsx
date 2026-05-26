@@ -35,7 +35,7 @@ export function ZenHeader({
     );
 
   return (
-    <header className="grid gap-4">
+    <header className="flex flex-col gap-4">
       <div className="flex items-start justify-between gap-4">
         <div className="flex items-center gap-3">
           <img src={logo} alt="ZenPlay Logo" className="h-12 w-12 rounded-xl shadow-sm" />
@@ -66,7 +66,7 @@ export function ZenHeader({
             <span className="text-xs opacity-70">{entry.itemCount}</span>
           </button>
         ))}
-        <Button className={quietButtonClass} type="button" variant="outline" onClick={onPrepareNewLabel}>
+        <Button className={cn(quietButtonClass, "rounded-full h-9")} type="button" variant="outline" onClick={onPrepareNewLabel}>
           <Plus size={16} />
           New
         </Button>

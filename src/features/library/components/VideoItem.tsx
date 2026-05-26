@@ -44,26 +44,26 @@ export function VideoItem({
   titleDrafts,
 }: VideoItemProps) {
   return (
-    <article
+    <section
       className={cn(
-        "grid gap-3 rounded-2xl border bg-white/32 p-3 transition",
+        " rounded-2xl border bg-white/32 p-3 transition",
         isSelected ? "border-white shadow-sm" : "border-white/45",
       )}
     >
-      <button
+      {/* <button
         className="grid gap-1 text-left"
         type="button"
         onClick={() => onSelect(item.id)}
       >
-        <div className="flex items-start justify-between gap-3">
+        <div className="flex items-start justify-between gap-3"> */}
           {/* <span className="text-xs font-semibold text-[#4d4741]">
             {item.label}
           </span> */}
-          <span className="text-xs text-[#756d65]">
+          {/* <span className="text-xs text-[#756d65]">
             {new Date(item.updatedAt).toLocaleDateString()}
           </span>
         </div>
-      </button>
+      </button> */}
 
       <div className="flex items-center justify-between gap-2">
         <span
@@ -131,6 +131,6 @@ export function VideoItem({
           {savingTitleId === item.id ? "Saving..." : <><Check size={16} /> Save</>}
         </Button>*/}
       </div>
-    </article>
+    </section>
   );
 }

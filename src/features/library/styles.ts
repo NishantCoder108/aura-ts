@@ -4,7 +4,7 @@ export const pageClass =
 export const ambientLayerClass =
   "pointer-events-none fixed inset-0 bg-[linear-gradient(120deg,rgba(255,255,255,0.72),rgba(232,225,216,0.42)_42%,rgba(138,120,101,0.28))]";
 
-export const shellClass = "relative z-10 mx-auto grid max-w-7xl gap-4";
+export const shellClass = "relative z-10 mx-auto flex flex-col max-w-7xl gap-4";
 
 export const panelClass =
   "rounded-2xl border border-white/55 bg-white/58 p-4 shadow-[0_20px_70px_rgba(66,53,42,0.12)] backdrop-blur-xl sm:p-5";

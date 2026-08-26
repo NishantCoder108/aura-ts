@@ -1,4 +1,4 @@
-# Aura Frontend
+# Zenplay Frontend
 
 Aura Frontend is the React application for the Aura project. It provides the user interface for authentication, playlist-based YouTube library management, favorites, and in-browser playback controls.
 
